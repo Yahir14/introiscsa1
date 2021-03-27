@@ -1,0 +1,506 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+"http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+<script language="JavaScript">
+
+/*
+Dynamic Calendar II (By Jason Moon at http://www.jasonmoon.net)
+Permission granted to Dynamicdrive.com to include script in archive
+For this and 100's more DHTML scripts, visit http://dynamicdrive.com
+*/
+
+var ns6=document.getElementById&&!document.all
+var ie4=document.all
+
+var Selected_Month;
+var Selected_Year;
+var Current_Date = new Date();
+var Current_Month = Current_Date.getMonth();
+
+var Days_in_Month = new Array(31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31);
+var Month_Label = new Array('January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December');
+
+var Current_Year = Current_Date.getYear();
+if (Current_Year < 1000)
+Current_Year+=1900
+
+
+var Today = Current_Date.getDate();
+
+function Header(Year, Month) {
+
+   if (Month == 1) {
+   Days_in_Month[1] = ((Year % 400 == 0) || ((Year % 4 == 0) && (Year % 100 !=0))) ? 29 : 28;
+   }
+   var Header_String = Month_Label[Month] + ' ' + Year;
+   return Header_String;
+}
+
+
+
+function Make_Calendar(Year, Month) {
+   var First_Date = new Date(Year, Month, 1);
+   var Heading = Header(Year, Month);
+   var First_Day = First_Date.getDay() + 1;
+   if (((Days_in_Month[Month] == 31) && (First_Day >= 6)) ||
+       ((Days_in_Month[Month] == 30) && (First_Day == 7))) {
+      var Rows = 6;
+   }
+   else if ((Days_in_Month[Month] == 28) && (First_Day == 1)) {
+      var Rows = 4;
+   }
+   else {
+      var Rows = 5;
+   }
+
+   var HTML_String = '<table><tr><td valign="top"><table BORDER=4 CELLSPACING=1 cellpadding=2 FRAME="box" BGCOLOR="C0C0C0" BORDERCOLORLIGHT="808080">';
+
+   HTML_String += '<tr><th colspan=7 BGCOLOR="FFFFFF" BORDERCOLOR="000000">' + Heading + '</font></th></tr>';
+
+   HTML_String += '<tr><th ALIGN="CENTER" BGCOLOR="FFFFFF" BORDERCOLOR="000000">Sun</th><th ALIGN="CENTER" BGCOLOR="FFFFFF" BORDERCOLOR="000000">Mon</th><th ALIGN="CENTER" BGCOLOR="FFFFFF" BORDERCOLOR="000000">Tue</th><th ALIGN="CENTER" BGCOLOR="FFFFFF" BORDERCOLOR="000000">Wed</th>';
+
+   HTML_String += '<th ALIGN="CENTER" BGCOLOR="FFFFFF" BORDERCOLOR="000000">Thu</th><th ALIGN="CENTER" BGCOLOR="FFFFFF" BORDERCOLOR="000000">Fri</th><th ALIGN="CENTER" BGCOLOR="FFFFFF" BORDERCOLOR="000000">Sat</th></tr>';
+
+   var Day_Counter = 1;
+   var Loop_Counter = 1;
+   for (var j = 1; j <= Rows; j++) {
+      HTML_String += '<tr ALIGN="left" VALIGN="top">';
+      for (var i = 1; i < 8; i++) {
+         if ((Loop_Counter >= First_Day) && (Day_Counter <= Days_in_Month[Month])) {
+            if ((Day_Counter == Today) && (Year == Current_Year) && (Month == Current_Month)) {
+               HTML_String += '<td BGCOLOR="FFFFFF" BORDERCOLOR="000000"><strong><font color="red">' + Day_Counter + '</font></strong></td>';
+            }
+            else {
+               HTML_String += '<td BGCOLOR="FFFFFF" BORDERCOLOR="000000">' + Day_Counter + '</td>';
+            }
+            Day_Counter++;    
+         }
+         else {
+            HTML_String += '<td BORDERCOLOR="C0C0C0"> </td>';
+         }
+         Loop_Counter++;
+      }
+      HTML_String += '</tr>';
+   }
+   HTML_String += '</table></td></tr></table>';
+   cross_el=ns6? document.getElementById("Calendar") : document.all.Calendar
+   cross_el.innerHTML = HTML_String;
+}
+
+
+function Check_Nums() {
+   if ((event.keyCode < 48) || (event.keyCode > 57)) {
+      return false;
+   }
+}
+
+
+
+function On_Year() {
+   var Year = document.when.year.value;
+   if (Year.length == 4) {
+      Selected_Month = document.when.month.selectedIndex;
+      Selected_Year = Year;
+      Make_Calendar(Selected_Year, Selected_Month);
+   }
+}
+
+function On_Month() {
+   var Year = document.when.year.value;
+   if (Year.length == 4) {
+      Selected_Month = document.when.month.selectedIndex;
+      Selected_Year = Year;
+      Make_Calendar(Selected_Year, Selected_Month);
+   }
+   else {
+      alert('Please enter a valid year.');
+      document.when.year.focus();
+   }
+}
+
+
+function Defaults() {
+   if (!ie4&&!ns6)
+   return
+   var Mid_Screen = Math.round(document.body.clientWidth / 2);
+   document.when.month.selectedIndex = Current_Month;
+   document.when.year.value = Current_Year;
+   Selected_Month = Current_Month;
+   Selected_Year = Current_Year;
+   Make_Calendar(Current_Year, Current_Month);
+}
+
+
+function Skip(Direction) {
+   if (Direction == '+') {
+      if (Selected_Month == 11) {
+         Selected_Month = 0;
+         Selected_Year++;
+      }
+      else {
+         Selected_Month++;
+      }
+   }
+   else {
+      if (Selected_Month == 0) {
+         Selected_Month = 11;
+         Selected_Year--;
+      }
+      else {
+         Selected_Month--;
+      }
+   }
+   Make_Calendar(Selected_Year, Selected_Month);
+   document.when.month.selectedIndex = Selected_Month;
+   document.when.year.value = Selected_Year;
+}
+
+</script>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<title>Untitled Document</title>
+<style type="text/css">
+<!--
+body {
+	background-color: #000000;
+}
+.style1 {color: #FFFFFF}
+.style3 {
+	color: #FFFFFF;
+	font-weight: bold;
+	font-size: 24px;
+}
+-->
+</style></head>
+
+<body>
+<script language="JavaScript">
+
+
+
+//Comment trail script- By Kurt (kurt.grigg@virgin.net)
+
+//Script featured on Dynamic Drive
+
+//Visit http://www.dynamicdrive.com for this script and more
+
+
+
+colours=new Array('#ff0000','#00ff00','#ffffff','#ff00ff','#ffa500','#ffff00','#00ff00','#ffffff','ff00ff')
+
+n = 10;
+
+y = 0;
+
+x = 0;
+
+n6=(document.getElementById&&!document.all);
+
+ns=(document.layers);
+
+ie=(document.all);
+
+d=(ns||ie)?'document.':'document.getElementById("';
+
+a=(ns||n6)?'':'all.';
+
+n6r=(n6)?'")':'';
+
+s=(ns)?'':'.style';
+
+if (ns){
+
+for (i = 0; i < n; i++)
+
+document.write('<layer name="dots'+i+'" top=0 left=0 width='+i/2+' height='+i/2+' bgcolor=#ff0000></layer>');
+
+}
+
+if (ie)
+
+document.write('<div id="con" style="position:absolute;top:0px;left:0px"><div style="position:relative">');
+
+if (ie||n6){
+
+for (i = 0; i < n; i++)
+
+document.write('<div id="dots'+i+'" style="position:absolute;top:0px;left:0px;width:'+i/2+'px;height:'+i/2+'px;background:#ff0000;font-size:'+i/2+'"></div>');
+
+}
+
+if (ie)
+
+document.write('</div></div>');
+
+(ns||n6)?window.captureEvents(Event.MOUSEMOVE):0;
+
+function Mouse(evnt){
+
+y = (ns||n6)?evnt.pageY+4 - window.pageYOffset:event.y+4;
+
+x = (ns||n6)?evnt.pageX+1:event.x+1;
+
+}
+
+(ns)?window.onMouseMove=Mouse:document.onmousemove=Mouse;
+
+function animate(){
+
+o=(ns||n6)?window.pageYOffset:0;
+
+if (ie)con.style.top=document.body.scrollTop + 'px';
+
+for (i = 0; i < n; i++){
+
+var temp1 = eval(d+a+"dots"+i+n6r+s);
+
+
+
+randcolours = colours[Math.floor(Math.random()*colours.length)];
+
+(ns)?temp1.bgColor = randcolours:temp1.background = randcolours; 
+
+if (i < n-1){
+
+ var temp2 = eval(d+a+"dots"+(i+1)+n6r+s);
+
+ temp1.top = parseInt(temp2.top) + 'px';
+
+ temp1.left = parseInt(temp2.left) + 'px';
+
+ } 
+
+else{
+
+ temp1.top = y+o + 'px';
+
+ temp1.left = x + 'px';
+
+ }
+
+}
+
+setTimeout("animate()",10);
+
+}
+
+animate();
+
+// -->
+
+</script>
+<div id=NavBar style="position:relative;width:286px;top:5px;" align="left">
+<form name="when"><table>
+<tr>
+   <td><input type="button" value="<-- Last" onClick="Skip('-')"></td>
+   <td> </td>
+   <td><select name="month" onChange="On_Month()">
+
+<script language="JavaScript1.2">
+if (ie4||ns6){
+   for (j=0;j<Month_Label.length;j++) {
+      document.writeln('<option value=' + j + '>' + Month_Label[j]);
+   }
+}
+</script>
+
+       </select>
+   </td>
+   <td><input type="text" name="year" size=4 maxlength=4 onKeyPress="return Check_Nums()" onKeyUp="On_Year()"></td>
+   <td> </td>
+   <td><input type="button" value="Next -->" onClick="Skip('+')"></td>
+</tr></table></form></div>  
+<div id=Calendar style="position:relative;width:238px;top:-2px;" align="left"></div>
+<body onLoad = "Valores predeterminados ()" >
+<p align="left" class="style1"> </p>
+
+
+<b>
+
+<script>
+
+/*
+RAINBOW TEXT Script by Matt Hedgecoe (c) 2002
+Featured on JavaScript Kit
+For this script, visit http://www.javascriptkit.com
+*/
+
+// ********** MAKE YOUR CHANGES HERE
+
+var text="JAVA SCRIPT" // YOUR TEXT
+var speed=90 // SPEED OF FADE
+
+// ********** LEAVE THE NEXT BIT ALONE!
+
+
+if (document.all||document.getElementById){
+document.write('<span id="highlight">' + text + '</span>')
+var storetext=document.getElementById? document.getElementById("highlight") : document.all.highlight
+}
+else
+document.write(text)
+var hex=new Array("00","14","28","3C","50","64","78","8C","A0","B4","C8","DC","F0")
+var r=1
+var g=1
+var b=1
+var seq=1
+function changetext(){
+rainbow="#"+hex[r]+hex[g]+hex[b]
+storetext.style.color=rainbow
+}
+function change(){
+if (seq==6){
+b--
+if (b==0)
+seq=1
+}
+if (seq==5){
+r++
+if (r==12)
+seq=6
+}
+if (seq==4){
+g--
+if (g==0)
+seq=5
+}
+if (seq==3){
+b++
+if (b==12)
+seq=4
+}
+if (seq==2){
+r--
+if (r==0)
+seq=3
+}
+if (seq==1){
+g++
+if (g==12)
+seq=2
+}
+changetext()
+}
+function starteffect(){
+if (document.all||document.getElementById)
+flash=setInterval("change()",speed)
+}
+starteffect()
+</script>
+</b>
+
+<p align="center">
+
+
+
+<script type="text/javascript">
+
+/***********************************************
+* Fading Scroller- (c) Dynamic Drive DHTML code library (www.dynamicdrive.com)
+* Please keep this notice intact
+* Visit Dynamic Drive at http://www.dynamicdrive.com/ for full source code
+***********************************************/
+
+var delay = 1000; //set delay between message change (in miliseconds)
+var maxsteps=60; // number of steps to take to change from start color to endcolor
+var stepdelay=50; // time in miliseconds of a single step
+//**Note: maxsteps*stepdelay will be total time in miliseconds of fading effect
+var startcolor= new Array(255,255,255); // start color (red, green, blue)
+var endcolor=new Array(0,0,0); // end color (red, green, blue)
+
+var fcontent=new Array();
+begintag='<div style="font: normal 19px Arial; padding: 8px;">'; //set opening tag, such as font declarations
+fcontent[0]="<b> ¡Hola! <a href='../morezone/index.htm'></a>";
+fcontent[1]="Bienvenido a la carrera de:";
+fcontent[2]="Ingenieria en Sistemas Computacionales</a>";
+closetag='</div>';
+
+var fwidth='150px'; //set scroller width
+var fheight='150px'; //set scroller height
+
+var fadelinks=1;  //should links inside scroller content also fade like text? 0 for no, 1 for yes.
+
+///No need to edit below this line/////////////////
+
+
+var ie4=document.all&&!document.getElementById;
+var DOM2=document.getElementById;
+var faderdelay=0;
+var index=0;
+
+
+/*Rafael Raposo edited function*/
+//function to change content
+function changecontent(){
+  if (index>=fcontent.length)
+    index=0
+  if (DOM2){
+    document.getElementById("fscroller").style.color="rgb("+startcolor[0]+", "+startcolor[1]+", "+startcolor[2]+")"
+    document.getElementById("fscroller").innerHTML=begintag+fcontent[index]+closetag
+    if (fadelinks)
+      linkcolorchange(1);
+    colorfade(1, 15);
+  }
+  else if (ie4)
+    document.all.fscroller.innerHTML=begintag+fcontent[index]+closetag;
+  index++
+}
+
+// colorfade() partially by Marcio Galli for Netscape Communications.  ////////////
+// Modified by Dynamicdrive.com
+
+function linkcolorchange(step){
+  var obj=document.getElementById("fscroller").getElementsByTagName("A");
+  if (obj.length>0){
+    for (i=0;i<obj.length;i++)
+      obj[i].style.color=getstepcolor(step);
+  }
+}
+
+/*Rafael Raposo edited function*/
+var fadecounter;
+function colorfade(step) {
+  if(step<=maxsteps) {	
+    document.getElementById("fscroller").style.color=getstepcolor(step);
+    if (fadelinks)
+      linkcolorchange(step);
+    step++;
+    fadecounter=setTimeout("colorfade("+step+")",stepdelay);
+  }else{
+    clearTimeout(fadecounter);
+    document.getElementById("fscroller").style.color="rgb("+endcolor[0]+", "+endcolor[1]+", "+endcolor[2]+")";
+    setTimeout("changecontent()", delay);
+	
+  }   
+}
+
+/*Rafael Raposo's new function*/
+function getstepcolor(step) {
+  var diff
+  var newcolor=new Array(3);
+  for(var i=0;i<3;i++) {
+    diff = (startcolor[i]-endcolor[i]);
+    if(diff > 0) {
+      newcolor[i] = startcolor[i]-(Math.round((diff/maxsteps))*step);
+    } else {
+      newcolor[i] = startcolor[i]+(Math.round((Math.abs(diff)/maxsteps))*step);
+    }
+  }
+  return ("rgb(" + newcolor[0] + ", " + newcolor[1] + ", " + newcolor[2] + ")");
+}
+
+if (ie4||DOM2)
+  document.write('<div id="fscroller" style="border:1px solid black;width:'+fwidth+';height:'+fheight+'"></div>');
+
+if (window.addEventListener)
+window.addEventListener("load", changecontent, false)
+else if (window.attachEvent)
+window.attachEvent("onload", changecontent)
+else if (document.getElementById)
+window.onload=changecontent
+
+</script>
+<br />
+<a href="http://javascriptkit.com"></a></p>
+</body>
+</html>
