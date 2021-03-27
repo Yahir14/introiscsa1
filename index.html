@@ -1,4 +1,5 @@
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Frameset//EN" "http://www.w3.org/TR/html4/frameset.dtd">
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+"http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
@@ -13,15 +14,61 @@ function MM_reloadPage(init) {  //reloads the window if Nav4 resized
 MM_reloadPage(true);
 //-->
 </script>
-</head>
+<style type="text/css">
+<!--
+body {
+	background-color: #0066FF;
+}
+.style1 {
+	color: #000000;
+	font-style: italic;
+	font-weight: bold;
+}
+-->
+</style></head>
 
-<frameset rows="80,*" cols="*" frameborder="NO" border="0" framespacing="0">
-  <frame src="rojo.htm" name="topFrame" scrolling="NO" noresize >
-  <frameset rows="*" cols="205,*" framespacing="0" frameborder="NO" border="0">
-    <frame src="verde.htm" name="leftFrame" scrolling="NO" noresize>
-    <frame src="azul.htm" name="mainFrame">
-  </frameset>
-</frameset>
-<noframes><body>
-</body></noframes>
+<body>
+<script language="javascript">
+<!--//
+/*This Script allows people to enter by using a form that asks for a
+UserID and Password*/
+function pasuser(form) {
+if (form.id.value=="Yahir") { 
+if (form.pass.value=="Nogal") {              
+location="https://yahir14.github.io/introiscsa1/index2.html" 
+} else {
+alert("Invalid Password")
+}
+} else {  alert("Invalid UserID")
+}
+}
+//-->
+</script>
+
+<center>
+<table bgcolor="white" cellpadding="12" border="1">
+<tr><td colspan="2"><blockquote>
+  <center>
+    <h1 class="style1">Sistemas computacionales </h1>
+  </center>
+</blockquote></td>
+</tr>
+<tr><td><h1><i><b>UserID:</b></i></h1></td><td><form name="login"><input
+name="id" type="text">
+<tr><td><h1><i><b>Password:</b></i></h1></td><td><input name="pass"
+type="password"></td></tr>
+<tr><td><center><input type="button" value="Login"
+onClick="pasuser(this.form)"></center></td><td><center><br><input
+type="Reset"></form></td></tr></table></center> 
+
+
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+</body>
 </html>
